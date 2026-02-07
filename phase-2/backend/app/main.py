@@ -7,7 +7,7 @@ from .auth import router as auth_router
 from .todo_routes import router as todos_router
 from .config import settings
 from .exceptions import TodoException
-
+from .chatbot import router as chatbot_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -46,7 +46,7 @@ app.include_router(auth_router)
 
 # Include todos routes
 app.include_router(todos_router)
-
+app.include_router(chatbot_router)
 
 from fastapi.responses import JSONResponse
 
@@ -64,3 +64,12 @@ async def global_exception_handler(request, exc):
         status_code=500,
         content={"detail": "An unexpected error occurred", "error": str(exc)}
     )
+
+
+
+
+
+
+
+
+
