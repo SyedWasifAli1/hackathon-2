@@ -1,0 +1,51 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install git-lfs
+      run: |
+        sudo apt-get update
+        sudo apt-get install git-lfs
+        git lfs install
+
+    - name: Clone Hugging Face Space
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      run: |
+        git clone https://username:$HF_TOKEN@huggingface.co/spaces/wasif111/todo-backend huggingface-space
+        cd huggingface-space
+        git lfs track "*.bin"
+        git add .gitattributes
+
+    - name: Copy backend contents
+      run: |
+        rsync -av --delete --exclude='.git' --exclude='.github' backend/ huggingface-space/
+
+    - name: Commit and push to Hugging Face
+      working-directory: huggingface-space
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        if ! git diff --cached --quiet; then
+          git commit -m "Update backend from GitHub [skip ci]"
+          git push https://username:$HF_TOKEN@huggingface.co/spaces/wasif111/todo-backend
+        else
+          echo "No changes to commit"
+        fi
