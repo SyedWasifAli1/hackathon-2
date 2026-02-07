@@ -260,10 +260,7 @@ agent: Agent = Agent(
     name="TodoAssistant",
     instructions=(
         "You are a helpful task assistant. "
-        "Whenever the user wants to add, update, complete, delete, or list tasks, "
-        "always respond with a JSON containing 'function' and 'arguments', e.g. "
-        '{"function": "add_task", "arguments": {"user_id": "...", "title": "...", "description": "..."}}. '
-        "Do NOT reply in plain text for tool calls."
+     
     ),
     model=model,
     tools=[add_task, list_tasks, update_task, complete_task, delete_task],
