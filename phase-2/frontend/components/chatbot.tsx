@@ -35,7 +35,7 @@ export default function ChatBot() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_CHATBOT_API_URL}/chatbot/ask`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chatbot/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage.text }),
