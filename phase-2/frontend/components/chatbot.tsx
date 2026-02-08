@@ -38,7 +38,7 @@ export default function ChatBot() {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chatbot/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage.text }),
+        body: JSON.stringify({ user_input: userMessage.text }),
       });
 
       const data = await res.json();
