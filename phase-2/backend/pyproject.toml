@@ -17,4 +17,5 @@ dependencies = [
     "openai>=1.0.0",
     "openai-agents>=0.8.1",
     "modelcontextprotocol>=1.0.1",
+    "argon2-cffi>=25.1.0",
 ]
